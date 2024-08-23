@@ -2,6 +2,7 @@ import express from "express";
 import { getPayloadClient } from "./get-payload";
 import { nextApp, nextHandler } from "./next-utils";
 import * as trpcExpress from "@trpc/server/adapters/express";
+import { appRouter } from "./trpc";
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
@@ -23,13 +24,15 @@ const start = async () => {
       },
     },
   });
+
   app.use(
     "/api/trpc",
-    trpcExpress({
-      router: approuter,
+    trpcExpress.createExpressMiddleware({
+      router: appRouter,
       createContext,
     })
   );
+
   app.use((req, res) => nextHandler(req, res));
 
   nextApp.prepare().then(() => {
@@ -37,7 +40,7 @@ const start = async () => {
 
     app.listen(PORT, async () => {
       payload.logger.info(
-        `Next.js App url: ${process.env.NEXT_PUBLIC_SERVER_URL} `
+        `Next.js App url: ${process.env.NEXT_PUBLIC_SERVER_URL}`
       );
     });
   });

@@ -9,11 +9,12 @@ import Link from "next/link";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import {
   AuthCredeintialValidator,
   TAuthCredeintialValidator,
 } from "@/lib/validators/account-credential-validator";
+import { trpc } from "@/trpc/client";
+import { useQuery } from "@tanstack/react-query";
 
 function page() {
   const {
@@ -23,6 +24,8 @@ function page() {
   } = useForm<TAuthCredeintialValidator>({
     resolver: zodResolver(AuthCredeintialValidator),
   });
+  const { mutate, status } = trpc.auth.createPayLoadUser.useMutation();
+  const isLoading = status === 'pending';
 
   const onsubmit = ({ email, password }: TAuthCredeintialValidator) => {};
 
@@ -64,6 +67,7 @@ function page() {
                 <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
+                  type="password"
                   {...register("password")}
                   placeholder="Enter your password"
                   className={cn({

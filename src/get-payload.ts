@@ -49,7 +49,7 @@ export const getPayloadClient = async ({ initOptions }: Args = {}):Promise<Paylo
         fromName:"Digital-Hippo"
       },
       local: initOptions?.express ? false : true,
-      ...initOptions,
+      ...(initOptions || {}),
     });
   }
 

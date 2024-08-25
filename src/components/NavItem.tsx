@@ -1,12 +1,11 @@
 'use client'
 
-
+import { PRODUCT_CATEGORIES } from '@/config'
 import { Button } from './ui/button'
 import { ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
-import { PRODUCT_CATEGORIES } from '@/app/config'
 
 type Category = (typeof PRODUCT_CATEGORIES)[number]
 

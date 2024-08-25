@@ -1,11 +1,11 @@
-import { AuthCredeintialValidator } from "../lib/validators/account-credential-validator";
+import { AuthCredentialValidator } from "../lib/validators/account-credential-validator";
 import { publicProcedure, router } from "./trpc";
 import { getPayloadClient } from "../get-payload";
 import { TRPCError } from "@trpc/server";
 
 export const authRouter = router({
   createPayLoadUser: publicProcedure
-    .input(AuthCredeintialValidator)
+    .input(AuthCredentialValidator)
     .mutation(async ({ input }) => {
       const { email, password } = input;
 
